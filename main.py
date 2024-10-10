@@ -82,7 +82,7 @@ def load_and_exec_modules():
                     print(f"Ошибка вызова функции {attr_name} из модуля {module.__name__}: {e}")
 
 
-@app.on_message(filters.command("help", prefixes="."))
+@app.on_message(filters.me & filters.command("help", prefixes="."))
 async def help_command(_, message):
     prefix = "."
     help_text = "**⚙ Модулей загружено: {}**\n\n".format(len(loaded_modules))
@@ -102,7 +102,7 @@ async def help_command(_, message):
     await message.edit(help_text)
 
 
-@app.on_message(filters.command("info", prefixes="."))
+@app.on_message(filters.me & filters.command("info", prefixes="."))
 async def info_command(_, message):
     prefix = "."
     current_time = time.time()
@@ -137,7 +137,7 @@ async def info_command(_, message):
     await message.edit(info_text)
 
 
-@app.on_message(filters.command(["off"], prefixes="."))
+@app.on_message(filters.me & filters.command(["off"], prefixes="."))
 async def turn_off(_, message):
     await message.edit("🌕")
     sleep(1)
@@ -156,7 +156,7 @@ async def ping(_, message):
     await message.edit(f"**⚡ Ваш пинг: {ping_time} мс**\n**🚀 Прошло с последней перезагрузки: {uptime}**\n\n 💡 __Скорость отклика Telegram в большей степени зависит от загруженности серверов Telegram и других внешних факторов и никак не связана с параметрами сервера, на который установлен юзербот__")
 
 
-@app.on_message(filters.command(["restart"], prefixes="."))
+@app.on_message(filters.me & filters.command(["restart"], prefixes="."))
 async def restart(_, message):
     await message.edit("**Перезапускаю модули...**")
     restart_start_time = time.time()
@@ -166,7 +166,7 @@ async def restart(_, message):
     await message.edit(f"**✅ Модули перезапущены. Это заняло {restart_time} секунд.**")
 
 
-@app.on_message(filters.command("addbl", prefixes="."))
+@app.on_message(filters.me & filters.command("addbl", prefixes="."))
 async def add_blacklist_command(_, message):
     userid_telegram = 1234567890 # Замените на свой ID
     if message.from_user.id == userid_telegram:
@@ -197,7 +197,7 @@ async def add_blacklist_command(_, message):
         time.sleep(1)
         await message.edit("❌ **Вы не можете использовать данную команду.**")
 
-@app.on_message(filters.command("delbl", prefixes="."))
+@app.on_message(filters.me & filters.command("delbl", prefixes="."))
 async def remove_blacklist_command(_, message):
     userid_telegram = 1234567890 # Замените на свой ID
     if message.from_user.id == userid_telegram:
